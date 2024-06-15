@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    omniai-mistral (1.0.3)
+    omniai-mistral (1.0.4)
       event_stream_parser
       omniai
       zeitwerk
