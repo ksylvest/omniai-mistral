@@ -1,5 +1,7 @@
 # OmniAI::Mistral
 
+[![CircleCI](https://circleci.com/gh/ksylvest/omniai-mistral.svg?style=svg)](https://circleci.com/gh/ksylvest/omniai-mistral)
+
 An Mistral implementation of the [OmniAI](https://github.com/ksylvest/omniai) APIs.
 
 ## Installation
