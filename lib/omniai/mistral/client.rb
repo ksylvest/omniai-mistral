@@ -24,21 +24,22 @@ module OmniAI
 
       # @param api_key [String] optional - defaults to `OmniAI::Mistral.config.api_key`
       # @param host [String] optional - defaults to `OmniAI::Mistral.config.host`
+      # @param logger [Logger] optional - defaults to `OmniAI::Mistral.config.logger`
+      # @param timeout [Integer] optional - defaults to `OmniAI::Mistral.config.timeout`
       def initialize(
         api_key: OmniAI::Mistral.config.api_key,
+        host: OmniAI::Mistral.config.host,
         logger: OmniAI::Mistral.config.logger,
-        host: OmniAI::Mistral.config.host
+        timeout: OmniAI::Mistral.config.timeout
       )
         raise(ArgumentError, %(ENV['MISTRAL_API_KEY'] must be defined or `api_key` must be passed)) if api_key.nil?
 
-        super(api_key:, logger:)
-
-        @host = host
+        super
       end
 
       # @return [HTTP::Client]
       def connection
-        @connection ||= HTTP.auth("Bearer #{api_key}").persistent(@host)
+        @connection ||= super.auth("Bearer #{api_key}")
       end
 
       # @raise [OmniAI::Error]
