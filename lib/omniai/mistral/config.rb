@@ -2,15 +2,21 @@
 
 module OmniAI
   module Mistral
-    # Config for the Mistral `api_key` / `host` / `logger`, `chat_options`.
+    # Configuration for Mistral.
     class Config < OmniAI::Config
-      attr_accessor :chat_options
+      DEFAULT_HOST = 'https://api.mistral.ai'
 
-      def initialize
+      # @param api_key [String, nil] optional - defaults to `ENV['MISTRAL_API_KEY']`
+      # @param host [String, nil] optional - defaults to `ENV['MISTRAL_HOST'] w/ fallback to `DEFAULT_HOST`
+      # @param logger [Logger, nil] optional - defaults to
+      # @param timeout [Integer, Hash, nil] optional
+      def initialize(
+        api_key: ENV.fetch('MISTRAL_API_KEY', nil),
+        host: ENV.fetch('MISTRAL_HOST', DEFAULT_HOST),
+        logger: nil,
+        timeout: nil
+      )
         super
-        @api_key = ENV.fetch('MISTRAL_API_KEY', nil)
-        @host = ENV.fetch('MISTRAL_HOST', 'https://api.mistral.ai')
-        @chat_options = {}
       end
     end
   end
