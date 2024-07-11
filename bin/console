@@ -4,5 +4,7 @@
 require 'bundler/setup'
 require 'omniai/mistral'
 
+CLIENT = OmniAI::Mistral::Client.new(logger: Logger.new($stdout))
+
 require 'irb'
 IRB.start(__FILE__)
