@@ -51,9 +51,12 @@ module OmniAI
       # @param stream [Proc, nil] optional
       # @param tools [Array<OmniAI::Tool>, nil] optional
       #
+      # @yield [prompt] optional
+      # @yieldparam prompt [OmniAI::Chat::Prompt]
+      #
       # @return [OmniAI::Chat::Completion]
-      def chat(messages, model: Chat::Model::MEDIUM, temperature: nil, format: nil, stream: nil, tools: nil)
-        Chat.process!(messages, model:, temperature:, format:, stream:, tools:, client: self)
+      def chat(messages, model: Chat::Model::MEDIUM, temperature: nil, format: nil, stream: nil, tools: nil, &)
+        Chat.process!(messages, model:, temperature:, format:, stream:, tools:, client: self, &)
       end
     end
   end
