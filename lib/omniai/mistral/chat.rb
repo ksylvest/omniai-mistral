@@ -19,6 +19,8 @@ module OmniAI
         CODESTRAL = 'codestral-latest'
       end
 
+      DEFAULT_MODEL = Model::MEDIUM
+
       module Role
         ASSISTANT = 'assistant'
         USER = 'user'
