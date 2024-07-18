@@ -32,7 +32,7 @@ module OmniAI
       # @return [Hash]
       def payload
         OmniAI::Mistral.config.chat_options.merge({
-          messages:,
+          messages: @prompt.serialize,
           model: @model,
           stream: @stream.nil? ? nil : !@stream.nil?,
           temperature: @temperature,
