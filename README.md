@@ -46,21 +46,10 @@ completion.choice.message.content # 'Why did the chicken cross the road? To get 
 ```
 
 ```ruby
-completion = client.chat({
-  role: OmniAI::Chat::Role::USER,
-  content: 'Is it wise to jump off a bridge?'
-})
-completion.choice.message.content # 'No.'
-```
-
-```ruby
-completion = client.chat([
-  {
-    role: OmniAI::Chat::Role::SYSTEM,
-    content: 'You are a helpful assistant.'
-  },
-  'What is the capital of Canada?',
-])
+completion = client.chat do |prompt|
+  prompt.system('You are a helpful assistant.')
+  prompt.user('What is the capital of Canada?')
+end
 completion.choice.message.content # 'The capital of Canada is Ottawa.'
 ```
 
@@ -104,10 +93,10 @@ client.chat('Be poetic.', stream:)
 `format` takes an optional symbol (`:json`) and that sets the `response_format` to `json_object`:
 
 ```ruby
-completion = client.chat([
-  { role: OmniAI::Chat::Role::SYSTEM, content: OmniAI::Chat::JSON_PROMPT },
-  { role: OmniAI::Chat::Role::USER, content: 'What is the name of the drummer for the Beatles?' }
-], format: :json)
+completion = client.chat(format: :json) do |prompt|
+  prompt.system(OmniAI::Chat::JSON_PROMPT)
+  prompt.user('What is the name of the drummer for the Beatles?')
+end
 JSON.parse(completion.choice.message.content) # { "name": "Ringo" }
 ```
 

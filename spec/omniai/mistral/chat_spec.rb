@@ -34,10 +34,10 @@ RSpec.describe OmniAI::Mistral::Chat do
 
     context 'with an array prompt' do
       let(:prompt) do
-        [
-          { role: OmniAI::Chat::Role::SYSTEM, content: 'You are a helpful assistant.' },
-          { role: OmniAI::Chat::Role::USER, content: 'What is the capital of Canada?' },
-        ]
+        OmniAI::Chat::Prompt.build do |prompt|
+          prompt.system('You are a helpful assistant.')
+          prompt.user('What is the capital of Canada?')
+        end
       end
 
       before do
@@ -96,10 +96,10 @@ RSpec.describe OmniAI::Mistral::Chat do
       subject(:completion) { described_class.process!(prompt, client:, model:, format: :json) }
 
       let(:prompt) do
-        [
-          { role: OmniAI::Chat::Role::SYSTEM, content: OmniAI::Chat::JSON_PROMPT },
-          { role: OmniAI::Chat::Role::USER, content: 'What is the name of the dummer for the Beatles?' },
-        ]
+        OmniAI::Chat::Prompt.build do |prompt|
+          prompt.system(OmniAI::Chat::JSON_PROMPT)
+          prompt.user('What is the name of the dummer for the Beatles?')
+        end
       end
 
       before do
