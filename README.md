@@ -103,3 +103,12 @@ JSON.parse(completion.choice.message.content) # { "name": "Ringo" }
 [Mistral API Reference `response_format`](https://docs.mistral.ai/api/)
 
 > When using JSON mode you MUST also instruct the model to produce JSON yourself with a system or a user message.
+
+### Embed
+
+Text can be converted into a vector embedding for similarity comparison usage via:
+
+```ruby
+response = client.embed('The quick brown fox jumps over a lazy dog.')
+response.embedding # [0.0, ...]
+```
