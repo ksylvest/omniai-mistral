@@ -58,6 +58,14 @@ module OmniAI
       def chat(messages = nil, model: Chat::DEFAULT_MODEL, temperature: nil, format: nil, stream: nil, tools: nil, &)
         Chat.process!(messages, model:, temperature:, format:, stream:, tools:, client: self, &)
       end
+
+      # @raise [OmniAI::Error]
+      #
+      # @param input [String, Array<String>, Array<Integer>] required
+      # @param model [String] optional
+      def embed(input, model: Embed::DEFAULT_MODEL)
+        Embed.process!(input, model:, client: self)
+      end
     end
   end
 end

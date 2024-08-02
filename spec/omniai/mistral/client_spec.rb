@@ -11,6 +11,14 @@ RSpec.describe OmniAI::Mistral::Client do
     end
   end
 
+  describe '#embed' do
+    it 'proxies' do
+      allow(OmniAI::Mistral::Embed).to receive(:process!)
+      client.embed('Hello!')
+      expect(OmniAI::Mistral::Embed).to have_received(:process!)
+    end
+  end
+
   describe '#connection' do
     it { expect(client.connection).to be_a(HTTP::Client) }
   end
