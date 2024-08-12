@@ -153,7 +153,7 @@ RSpec.describe OmniAI::Mistral::Chat do
         chunks = []
         allow(stream).to receive(:call) { |chunk| chunks << chunk }
         completion
-        expect(chunks.map { |chunk| chunk.choice.delta.content }).to eql(%w[A B])
+        expect(chunks.map(&:content)).to eql(%w[A B])
       end
     end
   end
