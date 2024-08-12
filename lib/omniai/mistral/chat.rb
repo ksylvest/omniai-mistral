@@ -19,7 +19,7 @@ module OmniAI
         CODESTRAL = 'codestral-latest'
       end
 
-      DEFAULT_MODEL = Model::MEDIUM
+      DEFAULT_MODEL = Model::LARGE
 
       module Role
         ASSISTANT = 'assistant'
@@ -39,7 +39,7 @@ module OmniAI
           stream: @stream.nil? ? nil : !@stream.nil?,
           temperature: @temperature,
           response_format: (JSON_RESPONSE_FORMAT if @format.eql?(:json)),
-          tools: @tools&.map(&:prepare),
+          tools: @tools&.map(&:serialize),
         }).compact
       end
 
