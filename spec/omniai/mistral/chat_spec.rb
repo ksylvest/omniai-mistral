@@ -14,7 +14,9 @@ RSpec.describe OmniAI::Mistral::Chat do
       before do
         stub_request(:post, 'https://api.mistral.ai/v1/chat/completions')
           .with(body: {
-            messages: [{ role: 'user', content: prompt }],
+            messages: [
+              { role: 'user', content: [{ type: 'text', text: 'Tell me a joke!' }] },
+            ],
             model:,
           })
           .to_return_json(body: {
@@ -44,8 +46,8 @@ RSpec.describe OmniAI::Mistral::Chat do
         stub_request(:post, 'https://api.mistral.ai/v1/chat/completions')
           .with(body: {
             messages: [
-              { role: 'system', content: 'You are a helpful assistant.' },
-              { role: 'user', content: 'What is the capital of Canada?' },
+              { role: 'system', content: [{ type: 'text', text: 'You are a helpful assistant.' }] },
+              { role: 'user', content: [{ type: 'text', text: 'What is the capital of Canada?' }] },
             ],
             model:,
           })
@@ -73,7 +75,9 @@ RSpec.describe OmniAI::Mistral::Chat do
       before do
         stub_request(:post, 'https://api.mistral.ai/v1/chat/completions')
           .with(body: {
-            messages: [{ role: 'user', content: prompt }],
+            messages: [
+              { role: 'user', content: [{ type: 'text', text: 'Pick a number between 1 and 5.' }] },
+            ],
             model:,
             temperature:,
           })
@@ -106,8 +110,8 @@ RSpec.describe OmniAI::Mistral::Chat do
         stub_request(:post, 'https://api.mistral.ai/v1/chat/completions')
           .with(body: {
             messages: [
-              { role: 'system', content: OmniAI::Chat::JSON_PROMPT },
-              { role: 'user', content: 'What is the name of the dummer for the Beatles?' },
+              { role: 'system', content: [{ type: 'text', text: OmniAI::Chat::JSON_PROMPT }] },
+              { role: 'user', content: [{ type: 'text', text: 'What is the name of the dummer for the Beatles?' }] },
             ],
             model:,
             response_format: { type: 'json_object' },
@@ -137,7 +141,7 @@ RSpec.describe OmniAI::Mistral::Chat do
         stub_request(:post, 'https://api.mistral.ai/v1/chat/completions')
           .with(body: {
             messages: [
-              { role: 'user', content: 'Tell me a story.' },
+              { role: 'user', content: [{ type: 'text', text: 'Tell me a story.' }] },
             ],
             model:,
             stream: !stream.nil?,
@@ -153,7 +157,7 @@ RSpec.describe OmniAI::Mistral::Chat do
         chunks = []
         allow(stream).to receive(:call) { |chunk| chunks << chunk }
         completion
-        expect(chunks.map(&:content)).to eql(%w[A B])
+        expect(chunks.map(&:text)).to eql(%w[A B])
       end
     end
   end
