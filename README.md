@@ -1,6 +1,10 @@
 # OmniAI::Mistral
 
-[![CircleCI](https://circleci.com/gh/ksylvest/omniai-mistral.svg?style=svg)](https://circleci.com/gh/ksylvest/omniai-mistral)
+[![LICENSE](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/ksylvest/omniai-mistral/blob/main/LICENSE)
+[![RubyGems](https://img.shields.io/gem/v/omniai-mistral)](https://rubygems.org/gems/omniai-mistral)
+[![GitHub](https://img.shields.io/badge/github-repo-blue.svg)](https://github.com/ksylvest/omniai-mistral)
+[![Yard](https://img.shields.io/badge/docs-site-blue.svg)](https://omniai-mistral.ksylvest.com)
+[![CircleCI](https://img.shields.io/circleci/build/github/ksylvest/omniai-mistral)](https://circleci.com/gh/ksylvest/omniai-mistral)
 
 An Mistral implementation of the [OmniAI](https://github.com/ksylvest/omniai) APIs.
 
