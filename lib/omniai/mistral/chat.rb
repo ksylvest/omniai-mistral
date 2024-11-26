@@ -14,9 +14,9 @@ module OmniAI
     class Chat < OmniAI::Chat
       module Model
         MISTRAL_SMALL_2409 = 'mistral-small-2409'
-        MISTRAL_SMALL_LATEST = 'mistral-small-latest' # LEGACY
-        MISTRAL_MEDIUM_2312 = 'mistral-medium-2312'
-        MISTRAL_MEDIUM_LATEST = 'mistral-medium-latest'
+        MISTRAL_SMALL_LATEST = 'mistral-small-latest'
+        MISTRAL_MEDIUM_2312 = 'mistral-medium-2312' # LEGACY
+        MISTRAL_MEDIUM_LATEST = 'mistral-medium-latest' # LEGACY
         MISTRAL_LARGE_2411 = 'mistral-large-2411'
         MISTRAL_LARGE_LATEST = 'mistral-large-latest'
         CODESTRAL_2405 = 'codestral-2405'
