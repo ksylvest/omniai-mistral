@@ -35,7 +35,7 @@ module OmniAI
         LARGE = MISTRAL_LARGE_LATEST
       end
 
-      DEFAULT_MODEL = Model::LARGE
+      DEFAULT_MODEL = Model::PIXTRAL_LARGE_LATEST
 
       module Role
         ASSISTANT = 'assistant'
