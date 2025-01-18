@@ -20,7 +20,7 @@ module OmniAI
     #
     #   client = OmniAI::Mistral::Client.new
     class Client < OmniAI::Client
-      VERSION = 'v1'
+      VERSION = "v1"
 
       # @param api_key [String] optional - defaults to `OmniAI::Mistral.config.api_key`
       # @param host [String] optional - defaults to `OmniAI::Mistral.config.host`
