@@ -11,12 +11,12 @@ module OmniAI
     #   response.embedding [0.0, ...]
     class Embed < OmniAI::Embed
       module Model
-        EMBED = 'mistral-embed'
+        EMBED = "mistral-embed"
       end
 
       DEFAULT_MODEL = Model::EMBED
 
-      protected
+    protected
 
       # @return [Hash]
       def payload

@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require 'bundler/setup'
-require 'omniai/mistral'
+require "bundler/setup"
+require "omniai/mistral"
 
 CLIENT = OmniAI::Mistral::Client.new(logger: Logger.new($stdout))
 
-require 'irb'
+require "irb"
 IRB.start(__FILE__)

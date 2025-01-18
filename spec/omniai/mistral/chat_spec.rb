@@ -3,19 +3,19 @@
 RSpec.describe OmniAI::Mistral::Chat do
   let(:client) { OmniAI::Mistral::Client.new }
 
-  describe '.process!' do
+  describe ".process!" do
     subject(:completion) { described_class.process!(prompt, client:, model:) }
 
     let(:model) { OmniAI::Mistral::Chat::Model::MEDIUM }
 
-    context 'with a string prompt' do
-      let(:prompt) { 'Tell me a joke!' }
+    context "with a string prompt" do
+      let(:prompt) { "Tell me a joke!" }
 
       before do
-        stub_request(:post, 'https://api.mistral.ai/v1/chat/completions')
+        stub_request(:post, "https://api.mistral.ai/v1/chat/completions")
           .with(body: {
             messages: [
-              { role: 'user', content: [{ type: 'text', text: 'Tell me a joke!' }] },
+              { role: "user", content: [{ type: "text", text: "Tell me a joke!" }] },
             ],
             model:,
           })
@@ -23,31 +23,31 @@ RSpec.describe OmniAI::Mistral::Chat do
             choices: [{
               index: 0,
               message: {
-                role: 'assistant',
-                content: 'Two elephants fall off a cliff. Boom! Boom!',
+                role: "assistant",
+                content: "Two elephants fall off a cliff. Boom! Boom!",
               },
             }],
           })
       end
 
-      it { expect(completion.choice.message.role).to eql('assistant') }
-      it { expect(completion.choice.message.content).to eql('Two elephants fall off a cliff. Boom! Boom!') }
+      it { expect(completion.choice.message.role).to eql("assistant") }
+      it { expect(completion.choice.message.content).to eql("Two elephants fall off a cliff. Boom! Boom!") }
     end
 
-    context 'with an array prompt' do
+    context "with an array prompt" do
       let(:prompt) do
         OmniAI::Chat::Prompt.build do |prompt|
-          prompt.system('You are a helpful assistant.')
-          prompt.user('What is the capital of Canada?')
+          prompt.system("You are a helpful assistant.")
+          prompt.user("What is the capital of Canada?")
         end
       end
 
       before do
-        stub_request(:post, 'https://api.mistral.ai/v1/chat/completions')
+        stub_request(:post, "https://api.mistral.ai/v1/chat/completions")
           .with(body: {
             messages: [
-              { role: 'system', content: [{ type: 'text', text: 'You are a helpful assistant.' }] },
-              { role: 'user', content: [{ type: 'text', text: 'What is the capital of Canada?' }] },
+              { role: "system", content: [{ type: "text", text: "You are a helpful assistant." }] },
+              { role: "user", content: [{ type: "text", text: "What is the capital of Canada?" }] },
             ],
             model:,
           })
@@ -55,28 +55,28 @@ RSpec.describe OmniAI::Mistral::Chat do
             choices: [{
               index: 0,
               message: {
-                role: 'assistant',
-                content: 'The capital of Canada is Ottawa.',
+                role: "assistant",
+                content: "The capital of Canada is Ottawa.",
               },
             }],
           })
       end
 
-      it { expect(completion.choice.message.role).to eql('assistant') }
-      it { expect(completion.choice.message.content).to eql('The capital of Canada is Ottawa.') }
+      it { expect(completion.choice.message.role).to eql("assistant") }
+      it { expect(completion.choice.message.content).to eql("The capital of Canada is Ottawa.") }
     end
 
-    context 'with a temperature' do
+    context "with a temperature" do
       subject(:completion) { described_class.process!(prompt, client:, model:, temperature:) }
 
-      let(:prompt) { 'Pick a number between 1 and 5.' }
+      let(:prompt) { "Pick a number between 1 and 5." }
       let(:temperature) { 2.0 }
 
       before do
-        stub_request(:post, 'https://api.mistral.ai/v1/chat/completions')
+        stub_request(:post, "https://api.mistral.ai/v1/chat/completions")
           .with(body: {
             messages: [
-              { role: 'user', content: [{ type: 'text', text: 'Pick a number between 1 and 5.' }] },
+              { role: "user", content: [{ type: "text", text: "Pick a number between 1 and 5." }] },
             ],
             model:,
             temperature:,
@@ -85,63 +85,63 @@ RSpec.describe OmniAI::Mistral::Chat do
             choices: [{
               index: 0,
               message: {
-                role: 'assistant',
-                content: '3',
+                role: "assistant",
+                content: "3",
               },
             }],
           })
       end
 
-      it { expect(completion.choice.message.role).to eql('assistant') }
-      it { expect(completion.choice.message.content).to eql('3') }
+      it { expect(completion.choice.message.role).to eql("assistant") }
+      it { expect(completion.choice.message.content).to eql("3") }
     end
 
-    context 'when formatting as JSON' do
+    context "when formatting as JSON" do
       subject(:completion) { described_class.process!(prompt, client:, model:, format: :json) }
 
       let(:prompt) do
         OmniAI::Chat::Prompt.build do |prompt|
           prompt.system(OmniAI::Chat::JSON_PROMPT)
-          prompt.user('What is the name of the dummer for the Beatles?')
+          prompt.user("What is the name of the dummer for the Beatles?")
         end
       end
 
       before do
-        stub_request(:post, 'https://api.mistral.ai/v1/chat/completions')
+        stub_request(:post, "https://api.mistral.ai/v1/chat/completions")
           .with(body: {
             messages: [
-              { role: 'system', content: [{ type: 'text', text: OmniAI::Chat::JSON_PROMPT }] },
-              { role: 'user', content: [{ type: 'text', text: 'What is the name of the dummer for the Beatles?' }] },
+              { role: "system", content: [{ type: "text", text: OmniAI::Chat::JSON_PROMPT }] },
+              { role: "user", content: [{ type: "text", text: "What is the name of the dummer for the Beatles?" }] },
             ],
             model:,
-            response_format: { type: 'json_object' },
+            response_format: { type: "json_object" },
           })
           .to_return_json(body: {
             choices: [{
               index: 0,
               message: {
-                role: 'assistant',
+                role: "assistant",
                 content: '{ "name": "Ringo" }',
               },
             }],
           })
       end
 
-      it { expect(completion.choice.message.role).to eql('assistant') }
+      it { expect(completion.choice.message.role).to eql("assistant") }
       it { expect(completion.choice.message.content).to eql('{ "name": "Ringo" }') }
     end
 
-    context 'when streaming' do
+    context "when streaming" do
       subject(:completion) { described_class.process!(prompt, client:, model:, stream:) }
 
-      let(:prompt) { 'Tell me a story.' }
+      let(:prompt) { "Tell me a story." }
       let(:stream) { proc { |chunk| } }
 
       before do
-        stub_request(:post, 'https://api.mistral.ai/v1/chat/completions')
+        stub_request(:post, "https://api.mistral.ai/v1/chat/completions")
           .with(body: {
             messages: [
-              { role: 'user', content: [{ type: 'text', text: 'Tell me a story.' }] },
+              { role: "user", content: [{ type: "text", text: "Tell me a story." }] },
             ],
             model:,
             stream: !stream.nil?,
