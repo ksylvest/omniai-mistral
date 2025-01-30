@@ -13,7 +13,9 @@ module OmniAI
     #   chat.completion([{ role: 'system', content: 'Tell me a joke.' }])
     class Chat < OmniAI::Chat
       module Model
-        MISTRAL_SMALL_2409 = "mistral-small-2409"
+        MISTRAL_SMALL_2402 = "mistral-small-2402" # LEGACY
+        MISTRAL_SMALL_2409 = "mistral-small-2409" # LEGACY
+        MISTRAL_SMALL_2501 = "mistral-small-2501"
         MISTRAL_SMALL_LATEST = "mistral-small-latest"
         MISTRAL_MEDIUM_2312 = "mistral-medium-2312" # LEGACY
         MISTRAL_MEDIUM_LATEST = "mistral-medium-latest" # LEGACY
