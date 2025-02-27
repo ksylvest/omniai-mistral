@@ -1,9 +1,9 @@
 PATH
   remote: .
   specs:
-    omniai-mistral (1.9.5)
+    omniai-mistral (1.9.6)
       event_stream_parser
-      omniai
+      omniai (~> 1.9)
       zeitwerk
 
 GEM
