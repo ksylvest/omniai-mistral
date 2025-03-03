@@ -135,7 +135,8 @@ RSpec.describe OmniAI::Mistral::Chat do
       subject(:completion) { described_class.process!(prompt, client:, model:, stream:) }
 
       let(:prompt) { "Tell me a story." }
-      let(:stream) { proc { |chunk| } }
+      let(:stream) { proc { |chunk| chunks << chunk } }
+      let(:chunks) { [] }
 
       before do
         stub_request(:post, "https://api.mistral.ai/v1/chat/completions")
@@ -147,18 +148,14 @@ RSpec.describe OmniAI::Mistral::Chat do
             stream: !stream.nil?,
           })
           .to_return(body: <<~STREAM)
-            data: #{JSON.generate({ choices: [{ delta: { role: 'assistant', content: 'A' } }] })}\n
-            data: #{JSON.generate({ choices: [{ delta: { role: 'assistant', content: 'B' } }] })}\n
+            data: #{JSON.generate({ choices: [{ index: 0, delta: { role: 'assistant', content: 'Hello' } }] })}\n
+            data: #{JSON.generate({ choices: [{ index: 0, delta: { role: 'assistant', content: ' ' } }] })}\n
+            data: #{JSON.generate({ choices: [{ index: 0, delta: { role: 'assistant', content: 'World' } }] })}\n
             data: [DONE]\n
           STREAM
       end
 
-      it do
-        chunks = []
-        allow(stream).to receive(:call) { |chunk| chunks << chunk }
-        completion
-        expect(chunks.map(&:text)).to eql(%w[A B])
-      end
+      it { expect(completion.text).to eql("Hello World") }
     end
   end
 end
