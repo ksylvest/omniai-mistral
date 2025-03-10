@@ -54,7 +54,7 @@ module OmniAI
       # @yield [prompt] optional
       # @yieldparam prompt [OmniAI::Chat::Prompt]
       #
-      # @return [OmniAI::Chat::Completion]
+      # @return [OmniAI::Chat::Response]
       def chat(messages = nil, model: Chat::DEFAULT_MODEL, temperature: nil, format: nil, stream: nil, tools: nil, &)
         Chat.process!(messages, model:, temperature:, format:, stream:, tools:, client: self, &)
       end
@@ -63,8 +63,24 @@ module OmniAI
       #
       # @param input [String, Array<String>, Array<Integer>] required
       # @param model [String] optional
+      #
+      # @return [OmniAI::Embed::Response]
       def embed(input, model: Embed::DEFAULT_MODEL)
         Embed.process!(input, model:, client: self)
+      end
+
+      # @raise [OmniAI::Error]
+      #
+      # @param document [String] e.g. "https://vancouver.ca/files/cov/other-sectors-tourism.PDF"
+      # @param kind [Symbol] optional - `:document` or `:image` - default = `:document``
+      # @param model [String] optional - default = "mistral-ocr-latest"
+      # @param options [Hash] optional - e.g. `{ image_limit: 4 }`
+      #
+      # @raise [OmniAI::Error]
+      #
+      # @return [OmniAI::Mistral::OCR::Response]
+      def ocr(document, kind: OCR::DEFAULT_KIND, model: OCR::DEFAULT_MODEL, options: {})
+        OCR.process!(document, kind:, model:, options:, client: self)
       end
     end
   end

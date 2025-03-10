@@ -19,6 +19,14 @@ RSpec.describe OmniAI::Mistral::Client do
     end
   end
 
+  describe "#ocr" do
+    it "proxies" do
+      allow(OmniAI::Mistral::OCR).to receive(:process!)
+      client.ocr("http://localhost/sample")
+      expect(OmniAI::Mistral::OCR).to have_received(:process!)
+    end
+  end
+
   describe "#connection" do
     it { expect(client.connection).to be_a(HTTP::Client) }
   end

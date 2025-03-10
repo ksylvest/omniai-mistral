@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "bundler/setup"
+require "omniai/mistral"
+
+CLIENT = OmniAI::Mistral::Client.new
+
+URL = "https://vancouver.ca/files/cov/other-sectors-tourism.PDF"
+
+response = CLIENT.ocr(URL)
+
+response.pages.each do |page|
+  puts "INDEX=#{page.index}"
+  puts page.markdown
+end
