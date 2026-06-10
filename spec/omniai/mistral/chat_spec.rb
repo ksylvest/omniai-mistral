@@ -26,12 +26,16 @@ RSpec.describe OmniAI::Mistral::Chat do
                 role: "assistant",
                 content: "Two elephants fall off a cliff. Boom! Boom!",
               },
+              finish_reason: "stop",
             }],
           })
       end
 
-      it { expect(completion.choice.message.role).to eql("assistant") }
-      it { expect(completion.choice.message.content).to eql("Two elephants fall off a cliff. Boom! Boom!") }
+      it { expect(completion.choices.first.message.role).to eql("assistant") }
+      it { expect(completion.choices.first.message.content).to eql("Two elephants fall off a cliff. Boom! Boom!") }
+      it { expect(completion.choices.first.finish_reason.reason).to eq(:stop) }
+      it { expect(completion.finish_reason.reason).to eq(:stop) }
+      it { expect(completion.finish_reason.value).to eq("stop") }
     end
 
     context "with an array prompt" do
@@ -62,8 +66,8 @@ RSpec.describe OmniAI::Mistral::Chat do
           })
       end
 
-      it { expect(completion.choice.message.role).to eql("assistant") }
-      it { expect(completion.choice.message.content).to eql("The capital of Canada is Ottawa.") }
+      it { expect(completion.choices.first.message.role).to eql("assistant") }
+      it { expect(completion.choices.first.message.content).to eql("The capital of Canada is Ottawa.") }
     end
 
     context "with a temperature" do
@@ -92,8 +96,8 @@ RSpec.describe OmniAI::Mistral::Chat do
           })
       end
 
-      it { expect(completion.choice.message.role).to eql("assistant") }
-      it { expect(completion.choice.message.content).to eql("3") }
+      it { expect(completion.choices.first.message.role).to eql("assistant") }
+      it { expect(completion.choices.first.message.content).to eql("3") }
     end
 
     context "when formatting as JSON" do
@@ -127,8 +131,8 @@ RSpec.describe OmniAI::Mistral::Chat do
           })
       end
 
-      it { expect(completion.choice.message.role).to eql("assistant") }
-      it { expect(completion.choice.message.content).to eql('{ "name": "Ringo" }') }
+      it { expect(completion.choices.first.message.role).to eql("assistant") }
+      it { expect(completion.choices.first.message.content).to eql('{ "name": "Ringo" }') }
     end
 
     context "when streaming" do
