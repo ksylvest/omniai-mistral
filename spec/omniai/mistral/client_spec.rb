@@ -9,6 +9,13 @@ RSpec.describe OmniAI::Mistral::Client do
       client.chat("Hello!")
       expect(OmniAI::Mistral::Chat).to have_received(:process!)
     end
+
+    it "forwards extra keywords" do
+      allow(OmniAI::Mistral::Chat).to receive(:process!)
+      on_response = proc { |_response| }
+      client.chat("Hello!", on_response:)
+      expect(OmniAI::Mistral::Chat).to have_received(:process!).with("Hello!", hash_including(on_response:))
+    end
   end
 
   describe "#embed" do
